@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Doctor</title>
+</head>
+<body>
+    <h2>Add Doctor</h2>
+    <form method="POST">
+        <label>Name:</label><br>
+        <input type="text" name="name" required><br><br>
+        <label>Username:</label><br>
+        <input type="text" name="username" required><br><br>
+        <label>Password:</label><br>
+        <input type="password" name="password" required><br><br>
+        <label>Specialization:</label><br>
+        <select name="specialization_id" required>
+            {% for dept in departments %}
+            <option value="{{ dept.id }}">{{ dept.name }}</option>
+            {% endfor %}
+        </select><br><br>
+        <form method="POST">
+            <label>Specialization:</label><br>
+            <select name="specialization_id" required>
+                {% for dept in departments %}
+                <option value="{{ dept.id }}">{{ dept.name }}</option>
+                {% endfor %}
+            </select>
+            <a href="{{ url_for('admin.add_specialization') }}">Add new specialization</a><br><br>
+            <input type="submit" value="Add Doctor">
+        </form>
+
+        <input type="submit" value="Add Doctor">
+    </form>
+    <a href="{{ url_for('admin.dashboard') }}">Back to dashboard</a>
+</body>
+</html>

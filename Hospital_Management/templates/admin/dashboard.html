@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h2>Welcome, {{ current_user.username }} (Admin)</h2>
+    <a href="{{ url_for('admin.add_doctor') }}">Add Doctor</a>
+    <h3>Doctors:</h3>
+    <ul>
+    {% for doctor in doctors %}
+        <li>{{ doctor.name }}</li>
+    {% endfor %}
+    </ul>
+</body>
+</html>
