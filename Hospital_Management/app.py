@@ -112,9 +112,9 @@ def logout():
     return redirect(url_for('login'))
 
 
-from admin_routes import *
-from doctor_routes import *
-from patient_routes import *
+from routes.admin_routes import *
+from routes.doctor_routes import *
+from routes.patient_routes import *
 from utils import role_required
 
 @app.route('/admin/dashboard')
