@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Doctor Availability{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2><i class="fas fa-calendar-alt"></i> Set Availability</h2>
+    <hr>
+
+    <div class="card">
+        <div class="card-body">
+            <form method="POST">
+                <p class="text-muted">Set your availability for the next 7 days. Select the days you are available and
+                    specify the time slots.</p>
+
+                {% for day in next_7_days %}
+                {% set day_data = availability_dict.get(day, {}) %}
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="available_{{ loop.index0 }}"
+                                id="available_{{ loop.index0 }}" value="1" {% if day_data.get('is_available')
+                                %}checked{% endif %}>
+                            <label class="form-check-label" for="available_{{ loop.index0 }}">
+                                <strong>{{ day.strftime('%A, %B %d, %Y') }}</strong>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <input type="hidden" name="date_{{ loop.index0 }}" value="{{ day.strftime('%Y-%m-%d') }}">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label">Start Time</label>
+                                <input type="time" class="form-control" name="start_time_{{ loop.index0 }}"
+                                    value="{{ day_data.get('start_time', '09:00') }}">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">End Time</label>
+                                <input type="time" class="form-control" name="end_time_{{ loop.index0 }}"
+                                    value="{{ day_data.get('end_time', '17:00') }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">Save Availability</button>
+                    <a href="{{ url_for('doctor_dashboard') }}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

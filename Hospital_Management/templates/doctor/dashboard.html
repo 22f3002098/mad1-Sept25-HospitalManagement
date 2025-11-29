@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Doctor Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2><i class="fas fa-stethoscope"></i> Doctor Dashboard</h2>
+    <hr>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h5><i class="fas fa-calendar-week"></i> Upcoming Appointments (Next 7 Days)</h5>
+                </div>
+                <div class="card-body">
+                    {% if upcoming_appointments %}
+                    <div class="list-group">
+                        {% for appointment in upcoming_appointments %}
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between">
+                                <h6>{{ appointment.patient.name }}</h6>
+                                <small class="text-muted">{{ appointment.appointment_date }}</small>
+                            </div>
+                            <p class="mb-1">Time: {{ appointment.appointment_time }}</p>
+                            <small class="text-muted">Contact: {{ appointment.patient.contact }}</small>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p class="text-muted">No upcoming appointments</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-info text-white">
+                    <h5><i class="fas fa-users"></i> My Patients</h5>
+                </div>
+                <div class="card-body">
+                    {% if patients %}
+                    <div class="list-group">
+                        {% for patient in patients %}
+                        <a href="{{ url_for('patient_history', patient_id=patient.id) }}"
+                            class="list-group-item list-group-item-action">
+                            <div class="d-flex justify-content-between">
+                                <h6>{{ patient.name }}</h6>
+                                <small>{{ patient.age }} yrs, {{ patient.gender }}</small>
+                            </div>
+                            <small class="text-muted">{{ patient.contact }}</small>
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p class="text-muted">No patients yet</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Patient History{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2><i class="fas fa-history"></i> Patient Medical History</h2>
+    <hr>
+
+    <div class="card mb-4">
+        <div class="card-header bg-info text-white">
+            <h5>Patient: {{ patient.name }}</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <p><strong>Age:</strong> {{ patient.age }}</p>
+                </div>
+                <div class="col-md-3">
+                    <p><strong>Gender:</strong> {{ patient.gender }}</p>
+                </div>
+                <div class="col-md-3">
+                    <p><strong>Blood Group:</strong> {{ patient.blood_group or 'N/A' }}</p>
+                </div>
+                <div class="col-md-3">
+                    <p><strong>Contact:</strong> {{ patient.contact }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h4>Appointment History</h4>
+    {% for appointment in appointments %}
+    <div class="card mb-3">
+        <div class="card-header 
+            {% if appointment.status == 'Completed' %}bg-success text-white
+            {% elif appointment.status == 'Booked' %}bg-primary text-white
+            {% else %}bg-secondary text-white{% endif %}">
+            <div class="d-flex justify-content-between">
+                <span>{{ appointment.appointment_date }} - {{ appointment.appointment_time }}</span>
+                <span>{{ appointment.status }}</span>
+            </div>
+        </div>
+        {% if appointment.treatment %}
+        <div class="card-body">
+            <h6>Diagnosis:</h6>
+            <p>{{ appointment.treatment.diagnosis }}</p>
+            <h6>Prescription:</h6>
+            <p>{{ appointment.treatment.prescription }}</p>
+            {% if appointment.treatment.notes %}
+            <h6>Notes:</h6>
+            <p>{{ appointment.treatment.notes }}</p>
+            {% endif %}
+        </div>
+        {% else %}
+        <div class="card-body">
+            <p class="text-muted">No treatment record available</p>
+        </div>
+        {% endif %}
+    </div>
+    {% else %}
+    <p class="text-muted">No appointment history</p>
+    {% endfor %}
+</div>
+{% endblock %}
