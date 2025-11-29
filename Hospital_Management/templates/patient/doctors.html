@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Find Doctors{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2><i class="fas fa-search"></i> Find Doctors</h2>
+    <hr>
+
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <form method="GET" class="row g-3">
+                <div class="col-md-5">
+                    <input type="text" class="form-control" name="search" placeholder="Search by doctor name"
+                        value="{{ search }}">
+                </div>
+                <div class="col-md-5">
+                    <select class="form-select" name="department_id">
+                        <option value="">All Departments</option>
+                        {% for dept in departments %}
+                        <option value="{{ dept.id }}" {% if selected_department==dept.id|string %}selected{% endif %}>
+                            {{ dept.name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        {% for doctor in doctors %}
+        <div class="col-md-6 mb-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ doctor.name }}</h5>
+                    <p class="card-text">
+                        <strong>Department:</strong> {{ doctor.department.name }}<br>
+                        <strong>Qualification:</strong> {{ doctor.qualification }}<br>
+                        <strong>Experience:</strong> {{ doctor.experience_years }} years<br>
+                        <strong>Contact:</strong> {{ doctor.contact }}
+                    </p>
+                    <a href="{{ url_for('book_appointment', doctor_id=doctor.id) }}" class="btn btn-primary">
+                        <i class="fas fa-calendar-plus"></i> Book Appointment
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-12">
+            <div class="alert alert-info">No doctors found</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

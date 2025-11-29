@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Book Appointment{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2><i class="fas fa-calendar-plus"></i> Book Appointment</h2>
+    <hr>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    Doctor Information
+                </div>
+                <div class="card-body">
+                    <h5>{{ doctor.name }}</h5>
+                    <p>
+                        <strong>Department:</strong> {{ doctor.department.name }}<br>
+                        <strong>Qualification:</strong> {{ doctor.qualification }}<br>
+                        <strong>Experience:</strong> {{ doctor.experience_years }} years<br>
+                        <strong>Contact:</strong> {{ doctor.contact }}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    Select Date and Time
+                </div>
+                <div class="card-body">
+                    {% if available_slots %}
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="appointment_date" class="form-label">Select Date</label>
+                            <select class="form-select" id="appointment_date" name="appointment_date" required>
+                                <option value="">Choose a date</option>
+                                {% for slot in available_slots %}
+                                <option value="{{ slot.date }}">
+                                    {{ slot.date }} ({{ slot.start_time }} - {{ slot.end_time }})
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="appointment_time" class="form-label">Select Time</label>
+                            <input type="time" class="form-control" id="appointment_time" name="appointment_time"
+                                required>
+                            <small class="text-muted">Choose a time within doctor's availability</small>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-success">Book Appointment</button>
+                            <a href="{{ url_for('patient_doctors') }}" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                    {% else %}
+                    <div class="alert alert-warning">
+                        Doctor has not set availability for the next 7 days. Please check back later or choose another
+                        doctor.
+                    </div>
+                    <a href="{{ url_for('patient_doctors') }}" class="btn btn-primary">Back to Doctors</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

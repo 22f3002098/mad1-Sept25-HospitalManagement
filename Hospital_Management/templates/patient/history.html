@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Medical History{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2><i class="fas fa-file-medical-alt"></i> My Medical History</h2>
+    <hr>
+
+    {% for appointment in appointments %}
+    <div class="card mb-3 shadow-sm">
+        <div class="card-header bg-success text-white">
+            <div class="d-flex justify-content-between">
+                <span><i class="fas fa-user-md"></i> Dr. {{ appointment.doctor.name }} - {{
+                    appointment.doctor.department.name }}</span>
+                <span>{{ appointment.appointment_date }}</span>
+            </div>
+        </div>
+        <div class="card-body">
+            {% if appointment.treatment %}
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <h6><i class="fas fa-stethoscope"></i> Diagnosis:</h6>
+                    <p class="ms-3">{{ appointment.treatment.diagnosis }}</p>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <h6><i class="fas fa-prescription"></i> Prescription:</h6>
+                    <p class="ms-3">{{ appointment.treatment.prescription }}</p>
+                </div>
+                {% if appointment.treatment.notes %}
+                <div class="col-md-12 mb-3">
+                    <h6><i class="fas fa-notes-medical"></i> Additional Notes:</h6>
+                    <p class="ms-3">{{ appointment.treatment.notes }}</p>
+                </div>
+                {% endif %}
+            </div>
+            {% else %}
+            <p class="text-muted">Treatment details not available</p>
+            {% endif %}
+        </div>
+    </div>
+    {% else %}
+    <div class="alert alert-info">
+        <i class="fas fa-info-circle"></i> No medical history available
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

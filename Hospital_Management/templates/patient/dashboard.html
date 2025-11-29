@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Patient Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2><i class="fas fa-home"></i> Patient Dashboard</h2>
+    <hr>
+
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h5><i class="fas fa-hospital-user"></i> Available Departments</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% for dept in departments %}
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 border-primary">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ dept.name }}</h5>
+                                    <p class="card-text text-muted">{{ dept.description }}</p>
+                                    <a href="{{ url_for('patient_doctors', department_id=dept.id) }}"
+                                        class="btn btn-sm btn-primary">View Doctors</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h5><i class="fas fa-calendar-check"></i> Upcoming Appointments</h5>
+                </div>
+                <div class="card-body">
+                    {% if upcoming_appointments %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Doctor</th>
+                                    <th>Department</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for appointment in upcoming_appointments %}
+                                <tr>
+                                    <td>{{ appointment.doctor.name }}</td>
+                                    <td>{{ appointment.doctor.department.name }}</td>
+                                    <td>{{ appointment.appointment_date }}</td>
+                                    <td>{{ appointment.appointment_time }}</td>
+                                    <td>
+                                        <span class="badge bg-primary">{{ appointment.status }}</span>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p class="text-muted">No upcoming appointments</p>
+                    {% endif %}
+                    <a href="{{ url_for('patient_appointments') }}" class="btn btn-primary mt-2">View All
+                        Appointments</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
