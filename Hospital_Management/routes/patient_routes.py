@@ -18,7 +18,8 @@ def patient_dashboard_view():
     patient_id = session.get('patient_id')
     upcoming_appointments = Appointment.query.filter(
         Appointment.patient_id == patient_id,
-        Appointment.appointment_date >= today
+        Appointment.appointment_date >= today,
+        Appointment.status == 'Booked'
     ).order_by(Appointment.appointment_date).all()
     
     return render_template('patient/dashboard.html',
@@ -125,12 +126,16 @@ def patient_appointments_view():
     
     upcoming = Appointment.query.filter(
         Appointment.patient_id == patient_id,
-        Appointment.appointment_date >= today
+        Appointment.appointment_date >= today,
+        Appointment.status == 'Booked'
     ).order_by(Appointment.appointment_date).all()
     
     past = Appointment.query.filter(
         Appointment.patient_id == patient_id,
-        Appointment.appointment_date < today
+        db.or_(
+            Appointment.appointment_date < today,
+            Appointment.status.in_(['Completed', 'Cancelled'])
+        )
     ).order_by(Appointment.appointment_date.desc()).all()
     
     return render_template('patient/appointments.html',

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Hospital Management System{% endblock %}</title>
+    <title>{% block title %} MedCare Hospital {% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
@@ -15,7 +15,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ url_for('index') }}">
-                <i class="fas fa-hospital"></i> HMS
+                <i class="fas fa-hospital"></i> MedCare
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -99,7 +99,7 @@
 
     <footer class="footer mt-auto py-3 bg-light border-top">
         <div class="container text-center">
-            <span class="text-muted">© 2025 Hospital Management System. All rights reserved.</span>
+            <span class="text-muted">© 2025 MedCare Hospital. All rights reserved.</span>
         </div>
     </footer>
 

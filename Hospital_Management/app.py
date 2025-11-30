@@ -1,6 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from models import db, User, Admin, Doctor, Patient
 from utils import validate_phone, validate_email
+from routes.admin_routes import *
+from routes.doctor_routes import *
+from routes.patient_routes import *
+from utils import role_required
 import os
 
 app = Flask(__name__)
@@ -9,7 +13,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///hospital.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
-
 
 @app.route('/')
 def index():
@@ -110,12 +113,6 @@ def logout():
     session.clear()
     flash('Logged out successfully', 'info')
     return redirect(url_for('login'))
-
-
-from routes.admin_routes import *
-from routes.doctor_routes import *
-from routes.patient_routes import *
-from utils import role_required
 
 @app.route('/admin/dashboard')
 @role_required('admin')

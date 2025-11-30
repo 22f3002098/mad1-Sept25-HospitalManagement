@@ -19,7 +19,7 @@ def init_database():
             admin_profile = Admin(
                 user_id=admin_user.id,
                 name='Hospital Administrator',
-                contact='9999999999'
+                contact='9899556568'
             )
             db.session.add(admin_profile)
             db.session.commit()

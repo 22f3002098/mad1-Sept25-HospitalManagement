@@ -88,7 +88,6 @@ class Appointment(db.Model):
     appointment_time = db.Column(db.Time, nullable=False)
     status = db.Column(db.String(20), default='Booked')
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    
     treatment = db.relationship('Treatment', backref='appointment', uselist=False)
 
 
